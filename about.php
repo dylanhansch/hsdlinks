@@ -1,4 +1,5 @@
 <?php
+include_once("global.php");
 include_once("protected/config.php");
 ?>
 <!DOCTYPE html>

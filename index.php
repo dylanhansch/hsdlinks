@@ -1,4 +1,5 @@
 <?php
+include_once("global.php");
 include_once("protected/config.php");
 
 $id = $_GET['id'];
@@ -17,6 +18,22 @@ if($stmt->fetch()){
 
 $stmt->free_result();
 $stmt->close();
+
+function links(){
+	global $mysqli;
+	
+	$stmt = $mysqli->prepare("SELECT id,short,url FROM `links` WHERE `privacy` = 'public'");
+	$stmt->execute();
+	$stmt->bind_result($out_id,$out_short,$out_url);
+	$links = array();
+	
+	while($stmt->fetch()){
+		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url);
+	}
+	$stmt->close();
+	
+	return $links;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +55,21 @@ $stmt->close();
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
 					<h1>HSDLinks <small>Alpha</small></h1>
+					
+					<table class="table table-striped">
+						<tr>
+							<th>Shortened URL</th>
+							<th>Full URL</th>
+						</tr>
+						<?php $links = links();
+						foreach($links as $link): ?>
+						<tr>
+							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
+							<td><?php echo($link["url"]); ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+					
 				</div>
 			</div>
 		</div>
