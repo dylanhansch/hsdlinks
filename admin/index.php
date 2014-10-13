@@ -20,6 +20,22 @@ if($role != admin){
 	echo("For administrative access, please talk to Dylan Hansch.");
 	exit();
 }
+
+function links(){
+	global $mysqli;
+	
+	$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM links INNER JOIN users ON links.owner = users.id");
+	$stmt->execute();
+	$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner);
+	$links = array();
+	
+	while($stmt->fetch()){
+		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy, 'owner' => $out_owner);
+	}
+	$stmt->close();
+	
+	return $links;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +58,23 @@ if($role != admin){
 				<div class="col-lg-12" style="padding-top:50px;">
 					<h1>HSDLinks Admin Dashboard</h1>
 					
+					<table class="table table-striped">
+						<tr>
+							<th>Shortened URL</th>
+							<th>Full URL</th>
+							<th>Privacy</th>
+							<th>User</th>
+						</tr>
+						<?php $links = links();
+						foreach($links as $link): ?>
+						<tr>
+							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
+							<td><?php echo($link["url"]); ?></td>
+							<td><?php echo($link["privacy"]); ?></td>
+							<td><?php echo($link["owner"]); ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
 					
 				</div>
 			</div>

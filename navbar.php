@@ -25,6 +25,9 @@ $stmt->close();
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-left">
 						<li><a href="<?php echo($basedir); ?>about.php">About</a></li>
+						<?php if($logged == 1){ ?>
+						<li><a href="<?php echo($basedir); ?>create.php">Create</a></li>
+						<?php } ?>
 						<?php if($role == "admin"){ ?>
 						<li><a href="<?php echo($basedir); ?>admin/">Admin</a></li>
 						<?php } ?>
