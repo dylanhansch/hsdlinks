@@ -51,7 +51,6 @@ if(isset($_POST['username'])){
 			$stmt->close();
 		}
 	}
-	
 }
 ?>
 <!DOCTYPE html>

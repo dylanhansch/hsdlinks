@@ -21,21 +21,21 @@ if(isset($_POST['user'])){
 		if($stmt->fetch()){
 			if($pwhash !== crypt($pass, $pwhash)){
 				$message = "The information you entered was incorrect!";
-				break;
+			}else{
+				//start the sessions
+				$_SESSION['pass'] = $pwhash;
+				
+				$_SESSION['username'] = $username;
+				$_SESSION['id'] = $id;
+				
+				if($remember == "yes"){
+					//create the cookies
+					setcookie("id_cookie",$id,time()+60*60*24*100,"/");
+					pass_cookie("id_cookie",$id,time()+60*60*24*100,"/");
+				}
+				
+				header("Location: " . $basedir);
 			}
-			//start the sessions
-			$_SESSION['pass'] = $pwhash;
-			
-			$_SESSION['username'] = $username;
-			$_SESSION['id'] = $id;
-			
-			if($remember == "yes"){
-				//create the cookies
-				setcookie("id_cookie",$id,time()+60*60*24*100,"/");
-				pass_cookie("id_cookie",$id,time()+60*60*24*100,"/");
-			}
-			
-			header("Location: " . $basedir);
 		}else{
 			$message = "The information you entered was incorrect!";
 		}
