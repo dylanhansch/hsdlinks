@@ -1,11 +1,11 @@
 <?php
 // Web directory to HSDLinks installation, with beginning and trailing slash.
-$basedir = "/";
+$basedir = "/hsdlinks/";
 
 // Connecting to the database
 $host = "localhost";
-$user = "hsdlinks";
-$pass = "password";
+$user = "demo";
+$pass = "";
 $database = "hsdlinks";
 
 $mysqli = new mysqli($host, $user, $pass, $database);

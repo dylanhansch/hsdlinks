@@ -93,6 +93,23 @@ if(isset($_POST['pass'])){
 	}
 	$stmt->close();
 }
+
+function links(){
+	global $mysqli;
+	
+	$stmt = $mysqli->prepare("SELECT id,short,url,privacy FROM `links` WHERE `owner` = ?");
+	$stmt->bind_param('i', $_SESSION["id"]);
+	$stmt->execute();
+	$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy);
+	$links = array();
+	
+	while($stmt->fetch()){
+		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy);
+	}
+	$stmt->close();
+	
+	return $links;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,7 +130,8 @@ if(isset($_POST['pass'])){
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
-					<h1>My Account</h1>
+					<?php if($_GET['view'] == "edit"){ ?>
+					<h1>Edit Account</h1>
 					
 					<?php echo($a_message); ?>
 					<form action="account.php" method="post" role="form">
@@ -152,7 +170,29 @@ if(isset($_POST['pass'])){
 						
 						<button class="btn btn-primary" type="submit" name="changepass">Change Password</button>
 					</form>
+					<?php }else{ ?>
 					
+					<h1>Hey there <?php echo($fname); ?>!</h1>
+					<a href="?view=edit" class="btn btn-primary" role="button">Edit my Account</a>
+					
+					<h2>My Links</h2>
+					<table class="table table-striped">
+						<tr>
+							<th>Shortened URL</th>
+							<th>Full URL</th>
+							<th>Privacy</th>
+						</tr>
+						<?php $links = links();
+						foreach($links as $link): ?>
+						<tr>
+							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
+							<td><?php echo($link["url"]); ?></td>
+							<td><?php echo($link["privacy"]); ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+					
+					<?php } ?>
 				</div>
 			</div>
 		</div>
