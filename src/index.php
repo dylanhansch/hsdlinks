@@ -18,22 +18,6 @@ if($stmt->fetch()){
 
 $stmt->free_result();
 $stmt->close();
-
-function links(){
-	global $mysqli;
-	
-	$stmt = $mysqli->prepare("SELECT id,short,url FROM `links` WHERE `privacy` = 'public'");
-	$stmt->execute();
-	$stmt->bind_result($out_id,$out_short,$out_url);
-	$links = array();
-	
-	while($stmt->fetch()){
-		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url);
-	}
-	$stmt->close();
-	
-	return $links;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

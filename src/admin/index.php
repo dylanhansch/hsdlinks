@@ -21,7 +21,7 @@ if($role != admin){
 	exit();
 }
 
-function links(){
+function admin_links(){
 	global $mysqli;
 	
 	$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM links INNER JOIN users ON links.owner = users.id");
@@ -65,7 +65,7 @@ function links(){
 							<th>Privacy</th>
 							<th>User</th>
 						</tr>
-						<?php $links = links();
+						<?php $links = admin_links();
 						foreach($links as $link): ?>
 						<tr>
 							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>

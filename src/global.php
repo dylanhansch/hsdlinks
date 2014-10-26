@@ -55,4 +55,21 @@ if(isset($_SESSION['username']) && isset($_SESSION['pass']) && isset($_SESSION['
 	//if the user is not logged in
 	$logged = 0;
 }
+
+// Function for listing links you've got permission to in a table on index.php
+function links(){
+	global $mysqli;
+	
+	$stmt = $mysqli->prepare("SELECT id,short,url FROM `links` WHERE `privacy` = 'public'");
+	$stmt->execute();
+	$stmt->bind_result($out_id,$out_short,$out_url);
+	$links = array();
+	
+	while($stmt->fetch()){
+		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url);
+	}
+	$stmt->close();
+	
+	return $links;
+}
 ?>

@@ -94,7 +94,7 @@ if(isset($_POST['pass'])){
 	$stmt->close();
 }
 
-function links(){
+function my_links(){
 	global $mysqli;
 	
 	$stmt = $mysqli->prepare("SELECT id,short,url,privacy FROM `links` WHERE `owner` = ?");
@@ -182,7 +182,7 @@ function links(){
 							<th>Full URL</th>
 							<th>Privacy</th>
 						</tr>
-						<?php $links = links();
+						<?php $links = my_links();
 						foreach($links as $link): ?>
 						<tr>
 							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
