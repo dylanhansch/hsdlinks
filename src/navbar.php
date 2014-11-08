@@ -28,9 +28,6 @@ $stmt->close();
 						<?php if($logged == 1){ ?>
 						<li><a href="<?php echo($basedir); ?>create.php">Create</a></li>
 						<?php } ?>
-						<?php if($role == "admin"){ ?>
-						<li><a href="<?php echo($basedir); ?>admin/">Admin</a></li>
-						<?php } ?>
 					</ul>
 					<ul class="nav navbar-nav pull-right">
 						<?php if($logged == 0){ ?>

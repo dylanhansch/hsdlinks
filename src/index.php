@@ -44,12 +44,18 @@ $stmt->close();
 						<tr>
 							<th>Shortened URL</th>
 							<th>Full URL</th>
+							<?php if($logged != 0){
+							echo("<th>Privacy</th>");
+							echo("<th>Owner</th>"); } ?>
 						</tr>
 						<?php $links = links();
 						foreach($links as $link): ?>
 						<tr>
 							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
 							<td><?php echo($link["url"]); ?></td>
+							<?php if($logged != 0){
+							echo("<td>" . $link["privacy"] . "</td>");
+							echo("<td>" . $link["owner"] . "</td"); } ?>
 						</tr>
 						<?php endforeach; ?>
 					</table>
