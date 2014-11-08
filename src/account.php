@@ -93,23 +93,6 @@ if(isset($_POST['pass'])){
 	}
 	$stmt->close();
 }
-
-function my_links(){
-	global $mysqli;
-	
-	$stmt = $mysqli->prepare("SELECT id,short,url,privacy FROM `links` WHERE `owner` = ?");
-	$stmt->bind_param('i', $_SESSION["id"]);
-	$stmt->execute();
-	$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy);
-	$links = array();
-	
-	while($stmt->fetch()){
-		$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy);
-	}
-	$stmt->close();
-	
-	return $links;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,6 +115,10 @@ function my_links(){
 				<div class="col-lg-12" style="padding-top:50px;">
 					<?php if($_GET['view'] == "edit"){ ?>
 					<h1>Edit Account</h1>
+					<ol class="breadcrumb">
+					  <li><a href="account.php">Account</a></li>
+					  <li class="active">Edit</li>
+					</ol>
 					
 					<?php echo($a_message); ?>
 					<form action="account.php" method="post" role="form">
@@ -161,9 +148,15 @@ function my_links(){
 						<button class="btn btn-primary" style="margin-bottom:20px" type="submit" name="submit">Submit</button>
 					</form>
 					
+					<?php }elseif($_GET['view'] == "pass"){ ?>
+					<h1>Change Password</h1>
+					<ol class="breadcrumb">
+					  <li><a href="account.php">Account</a></li>
+					  <li class="active">Password</li>
+					</ol>
+					
 					<?php echo($b_message); ?>
 					<form action="account.php" method="post" role="form">
-						<label for="name">Change Password</label>
 						<input type="password" class="form-control" name="pass" placeholder="Current Password" required><br>
 						<input type="password" class="form-control" name="npass1" placeholder="New Password" required><br>
 						<input type="password" class="form-control" name="npass2" placeholder="Confirm New Password" required><br>
@@ -173,24 +166,7 @@ function my_links(){
 					<?php }else{ ?>
 					
 					<h1>Hey there <?php echo($fname); ?>!</h1>
-					<a href="?view=edit" class="btn btn-primary" role="button">Edit my Account</a>
-					
-					<h2>My Links</h2>
-					<table class="table table-striped">
-						<tr>
-							<th>Shortened URL</th>
-							<th>Full URL</th>
-							<th>Privacy</th>
-						</tr>
-						<?php $links = my_links();
-						foreach($links as $link): ?>
-						<tr>
-							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
-							<td><?php echo($link["url"]); ?></td>
-							<td><?php echo($link["privacy"]); ?></td>
-						</tr>
-						<?php endforeach; ?>
-					</table>
+					<a href="?view=edit" class="btn btn-primary" role="button">Edit Account</a> <a href="?view=pass" class="btn btn-primary" role="button">Change Password</a>
 					
 					<?php } ?>
 				</div>
