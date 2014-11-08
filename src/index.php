@@ -18,6 +18,10 @@ if($stmt->fetch()){
 
 $stmt->free_result();
 $stmt->close();
+
+if(isset($_GET["del"])){
+	del_link($_GET["del"]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +50,8 @@ $stmt->close();
 							<th>Full URL</th>
 							<?php if($logged != 0){
 							echo("<th>Privacy</th>");
-							echo("<th>Owner</th>"); } ?>
+							echo("<th>Owner</th>");
+							echo("<th></th>"); } ?>
 						</tr>
 						<?php $links = links();
 						foreach($links as $link): ?>
@@ -55,7 +60,8 @@ $stmt->close();
 							<td><?php echo($link["url"]); ?></td>
 							<?php if($logged != 0){
 							echo("<td>" . $link["privacy"] . "</td>");
-							echo("<td>" . $link["owner"] . "</td"); } ?>
+							echo("<td>" . $link["owner"] . "</td>");
+							echo('<td><a href=""><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>'); } ?>
 						</tr>
 						<?php endforeach; ?>
 					</table>

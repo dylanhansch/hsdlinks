@@ -65,7 +65,7 @@ $stmt->bind_result($role);
 $stmt->fetch();
 $stmt->close();
 
-// Function for listing links you've got permission to in a table on index.php
+// List links you've got permission to in a table on index.php
 function links(){
 	global $mysqli, $logged, $role;
 	if($role == "admin"){
@@ -95,6 +95,13 @@ function links(){
 		$stmt->close();
 
 		return $links;
+		
+		$stmt = $mysqli->prepare("SELECT role FROM privileges WHERE user_id = ? AND link_id = ?");
+		$stmt->bind_param('ii', $_SESSION['id'], $link["id"]);
+		$stmt->execute();
+		$stmt->bind_result($priv);
+		$stmt->fetch();
+		$stmt->close();
 	}else{
 		$stmt = $mysqli->prepare("SELECT id,short,url FROM `links` WHERE `privacy` = 'public'");
 		echo($mysqli->error);
@@ -110,4 +117,18 @@ function links(){
 		return $links;
 	}
 }
-?>
+
+// Delete specified link from database
+function del_link($link_id){
+	global $mysqli;
+
+	$stmt = $mysqli->prepare("DELETE FROM links WHERE id = ?");
+	$stmt->bind_param("i", $link_id);
+	$stmt->execute();
+	$stmt->close();
+
+	$stmt = $mysqli->prepare("DELETE FROM privileges WHERE link_id = ?");
+	$stmt->bind_param("i", $link_id);
+	$stmt->execute();
+	$stmt->close();
+}
