@@ -21,35 +21,58 @@ if(isset($_POST['original'])){
 		if($form_short == $links["short"]){
 			$message = "That is already a shortened URL!";
 		}else{
-			if(substr($form_orig, 0, 7) != "http://"){
-				$message = "Original URL must be HTTP or HTTPS protocol.";
-			}elseif(substr($form_orig, 0, 8) != "https://"){
-				$message = "Original URL must be HTTP or HTTPS protocol.";
-			}else{
-				$stmt = $mysqli->prepare("INSERT INTO links (short, url, privacy, owner) VALUES (?, ?, ?, ?)");
-				$stmt->bind_param('sssi', $form_short, $form_orig, $form_privacy, $owner);
+			if(substr($form_orig, 0, 7) === "http://" || substr($form_orig, 0, 8) === "https://"){
+				$stmt = $mysqli->prepare("INSERT INTO links (short, url, privacy) VALUES (?, ?, ?)");
+				echo($mysqli->error);
+				$stmt->bind_param('sss', $form_short, $form_orig, $form_privacy);
 				$stmt->execute();
+				$stmt->close();
+				
+				$stmt = $mysqli->prepare("SELECT id FROM links WHERE short = ?");
+				echo($mysqli->error);
+				$stmt->bind_param('s', $form_short);
+				$stmt->execute();
+				$stmt->bind_result($link_id);
+				$stmt->fetch();
+				$stmt->close();
+				
+				$stmt = $mysqli->prepare("INSERT INTO privileges (user_id, link_id, role) VALUES (?, ?, 'owner')");
+				echo($mysqli->error);
+				$stmt->bind_param('ii', $owner, $link_id);
+				$stmt->execute();
+				$stmt->close();
 				
 				$message = "HSDLink created.";
+			}else{
+				$message = "Origional URL must be HTTP or HTTPS protocol.";
 			}
-			
-			/*if(substr($form_orig, 0, 7) != "http://"){
+			/*
+			if(substr($form_orig, 0, 6) != "http://"){
+				$message = "Original URL must be HTTP or HTTPS protocol.";
+			}elseif(substr($form_orig, 0, 7) != "https://"){
 				$message = "Original URL must be HTTP or HTTPS protocol.";
 			}else{
-			$stmt = $mysqli->prepare("INSERT INTO links (short, url, privacy, owner) VALUES (?, ?, ?, ?)");
-			$stmt->bind_param('sssi', $form_short, $form_orig, $form_privacy, $owner);
-			$stmt->execute();
-			
-			$message = "HSDLink created.";	
-			}
-			if(substr($form_orig, 0, 8) != "https://"){
-				$message = "Original URL must be HTTP or HTTPS protocol.";
-			}else{
-			$stmt = $mysqli->prepare("INSERT INTO links (short, url, privacy, owner) VALUES (?, ?, ?, ?)");
-			$stmt->bind_param('sssi', $form_short, $form_orig, $form_privacy, $owner);
-			$stmt->execute();
-			
-			$message = "HSDLink created.";
+				$stmt = $mysqli->prepare("INSERT INTO links (short, url, privacy) VALUES (?, ?, ?)");
+				echo($mysqli->error);
+				$stmt->bind_param('sss', $form_short, $form_orig, $form_privacy);
+				$stmt->execute();
+				$stmt->close();
+				
+				$stmt = $mysqli->prepare("SELCT id FROM links WHERE short = ?");
+				echo($mysqli->error);
+				$stmt->bind_param('s', $form_short);
+				$stmt->execute();
+				$stmt->bind_result($link_id);
+				$stmt->fetch();
+				$stmt->close();
+				
+				$stmt = $mysqli->prepare("INSERT INTO privileges (user_id, link_id, role) VALUES (?, ?, 'owner')");
+				echo($mysqli->error);
+				$stmt->bind_param('ii', $owner, $link_id);
+				$stmt->execute();
+				$stmt->close();
+				
+				$message = "HSDLink created.";
 			}*/
 		}
 	}
