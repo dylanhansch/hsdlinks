@@ -21,6 +21,7 @@ $stmt->close();
 
 if(isset($_GET["del"])){
 	del_link($_GET["del"]);
+	header("Location: " . $basedir);
 }
 ?>
 <!DOCTYPE html>
