@@ -82,26 +82,19 @@ function links(){
 
 		return $links;
 	}elseif($logged == 1){
-		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id WHERE privacy = 'public' OR privileges.user_id = ?");
+		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username, privileges.role FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id WHERE privacy = 'public' OR privileges.user_id = ?");
 		echo($mysqli->error);
 		$stmt->bind_param('i', $_SESSION['id']);
 		$stmt->execute();
-		$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner);
+		$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner,$out_role);
 		$links = array();
-
+		
 		while($stmt->fetch()){
-			$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy, 'owner' => $out_owner);
+			$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy, 'owner' => $out_owner, 'role' => $out_role);
 		}
 		$stmt->close();
-
-		return $links;
 		
-		$stmt = $mysqli->prepare("SELECT role FROM privileges WHERE user_id = ? AND link_id = ?");
-		$stmt->bind_param('ii', $_SESSION['id'], $link["id"]);
-		$stmt->execute();
-		$stmt->bind_result($priv);
-		$stmt->fetch();
-		$stmt->close();
+		return $links;
 	}else{
 		$stmt = $mysqli->prepare("SELECT id,short,url FROM `links` WHERE `privacy` = 'public'");
 		echo($mysqli->error);
