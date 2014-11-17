@@ -19,6 +19,7 @@ if(isset($_POST['user'])){
 		$stmt->bind_result($id,$username,$pwhash);
 		
 		if($stmt->fetch()){
+			$stmt->close();
 			if($pwhash !== crypt($pass, $pwhash)){
 				$message = "The information you entered was incorrect!";
 			}else{
@@ -34,12 +35,25 @@ if(isset($_POST['user'])){
 					pass_cookie("id_cookie",$id,time()+60*60*24*100,"/");
 				}
 				
+				// Log new IP addresses (per user) for security
+				$stmt = $mysqli->prepare("SELECT ip_address FROM logins WHERE user = ? AND ip_address = ?");
+				$stmt->bind_param('is', $_SESSION['id'], $_SERVER['REMOTE_ADDR']);
+				$stmt->execute();
+				$stmt->bind_result($foo);
+				if(!($stmt->fetch())){
+					$stmt->close();
+
+					$stmt = $mysqli->prepare("INSERT INTO logins (user,date,ip_address) VALUES (?,now(),?)");
+					$stmt->bind_param('is', $_SESSION['id'], $_SERVER['REMOTE_ADDR']);
+					$stmt->execute();
+					$stmt->close();
+				}
+				
 				header("Location: " . $basedir);
 			}
 		}else{
 			$message = "The information you entered was incorrect!";
 		}
-		$stmt->close();
 	}
 }
 ?>
