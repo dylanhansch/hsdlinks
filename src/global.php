@@ -82,11 +82,11 @@ function links(){
 
 		return $links;
 	}elseif($logged == 1){
-		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username, privileges.role FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id WHERE privacy = 'public' OR privileges.user_id = ?");
+		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id WHERE privacy = 'public' OR privileges.user_id = ?");
 		echo($mysqli->error);
 		$stmt->bind_param('i', $_SESSION['id']);
 		$stmt->execute();
-		$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner,$out_role);
+		$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner);
 		$links = array();
 		
 		while($stmt->fetch()){
