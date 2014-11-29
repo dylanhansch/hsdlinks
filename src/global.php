@@ -3,6 +3,10 @@ session_name("hsdlinks");
 session_start();
 include_once("protected/config.php");
 
+if(file_exists("install.php")){
+	die("Before continuing to use this software, you must remove install.php");
+}
+
 //checking is the sessions are set
 if(isset($_SESSION['username']) && isset($_SESSION['pass']) && isset($_SESSION['id'])){
 	$session_username = $_SESSION['username'];
@@ -57,13 +61,15 @@ if(isset($_SESSION['username']) && isset($_SESSION['pass']) && isset($_SESSION['
 	$logged = 0;
 }
 
-$stmt = $mysqli->prepare("SELECT `role` FROM `users` WHERE id = ?");
-echo($mysqli->error);
-$stmt->bind_param('i', $_SESSION['id']);
-$stmt->execute();
-$stmt->bind_result($role);
-$stmt->fetch();
-$stmt->close();
+if(isset($_SESSION['id'])){
+	$stmt = $mysqli->prepare("SELECT `role` FROM `users` WHERE id = ?");
+	echo($mysqli->error);
+	$stmt->bind_param('i', $session_id);
+	$stmt->execute();
+	$stmt->bind_result($role);
+	$stmt->fetch();
+	$stmt->close();
+}
 
 // List links you've got permission to in a table on index.php
 function links(){
@@ -84,7 +90,7 @@ function links(){
 	}elseif($logged == 1){
 		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id WHERE privacy = 'public' OR privileges.user_id = ?");
 		echo($mysqli->error);
-		$stmt->bind_param('i', $_SESSION['id']);
+		$stmt->bind_param('i', $session_id);
 		$stmt->execute();
 		$stmt->bind_result($out_id,$out_short,$out_url,$out_privacy,$out_owner);
 		$links = array();

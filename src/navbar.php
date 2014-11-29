@@ -1,15 +1,15 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once('global.php');
+require_once('protected/config.php');
 
-$session_id = $_SESSION['id'];
-
-$stmt = $mysqli->prepare("SELECT firstname,role FROM `users` WHERE `id` = ?");
-$stmt->bind_param('i', $session_id);
-$stmt->execute();
-$stmt->bind_result($fname,$role);
-$stmt->fetch();
-$stmt->close();
+if(isset($_SESSION['id'])){
+	$stmt = $mysqli->prepare("SELECT firstname,role FROM `users` WHERE `id` = ?");
+	$stmt->bind_param('i', $session_id);
+	$stmt->execute();
+	$stmt->bind_result($fname,$role);
+	$stmt->fetch();
+	$stmt->close();
+}
 ?>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -27,6 +27,9 @@ $stmt->close();
 						<li><a href="<?php echo($basedir); ?>about.php">About</a></li>
 						<?php if($logged == 1){ ?>
 						<li><a href="<?php echo($basedir); ?>create.php">Create</a></li>
+						<?php } ?>
+						<?php if($role == "admin"){ ?>
+						<li><a href="<?php echo($basedir); ?>users.php">Users</a></li>
 						<?php } ?>
 					</ul>
 					<ul class="nav navbar-nav pull-right">
