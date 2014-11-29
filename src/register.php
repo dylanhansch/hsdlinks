@@ -1,6 +1,6 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once("global.php");
+require_once("protected/config.php");
 
 $message = "";
 if(isset($_POST['username'])){
@@ -26,6 +26,7 @@ if(isset($_POST['username'])){
 			
 			//check for duplicates
 			$stmt = $mysqli->prepare("SELECT username FROM `users` WHERE `username` = ? OR `email` = ? LIMIT 1");
+			echo($mysqli->error);
 			$stmt->bind_param('ss', $username,$email);
 			$stmt->execute();
 			$stmt->bind_result($user_query);
@@ -42,6 +43,7 @@ if(isset($_POST['username'])){
 				$ip_address = $_SERVER['REMOTE_ADDR'];
 				
 				$stmt = $mysqli->prepare("INSERT INTO users (username, email, firstname, lastname, password, sign_up_date, ip_address, role) VALUES (? , ?, ?, ?, ?, now(), ?, ?)");
+				echo($mysqli->error);
 				$stmt->bind_param('sssssss', $username, $email, $fname, $lname, $pass1, $ip_address, $role);
 				$stmt->execute();
 				$stmt->bind_result($query);

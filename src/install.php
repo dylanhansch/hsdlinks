@@ -30,9 +30,11 @@ if(isset($_GET['pop'])){
 	
 	$stmt = $mysqli->prepare("
 	CREATE TABLE `privileges` (
+		`id` int(11) NOT NULL AUTO_INCREMENT,
 		`user_id` int(11) NOT NULL,
 		`link_id` int(11) NOT NULL,
-		`role` varchar(255) NOT NULL
+		`role` varchar(255) NOT NULL,
+		PRIMARY KEY (`id`)
 	)
 	");
 	echo($mysqli->error);
@@ -47,6 +49,8 @@ if(isset($_GET['pop'])){
 		`firstname` varchar(255) NOT NULL,
 		`lastname` varchar(255) NOT NULL,
 		`password` varchar(255) NOT NULL,
+		`ip_address` varchar(255) NOT NULL,
+		`sign_up_date` date NOT NULL,
 		`role` varchar(255) NOT NULL,
 		PRIMARY KEY (`id`)
 	)

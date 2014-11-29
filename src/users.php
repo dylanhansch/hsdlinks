@@ -42,6 +42,7 @@ function users(){
 
 if(isset($_GET['edit'])){
 	$stmt = $mysqli->prepare("SELECT username FROM users WHERE id = ?");
+	echo($mysqli->error);
 	$stmt->bind_param('i', $_GET['edit']);
 	$stmt->execute();
 	if($stmt->fetch()){

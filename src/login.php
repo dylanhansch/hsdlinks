@@ -1,6 +1,6 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once("global.php");
+require_once("protected/config.php");
 
 $message = "";
 if(isset($_POST['user'])){
@@ -14,6 +14,7 @@ if(isset($_POST['user'])){
 	}else{
 		//securing the data
 		$stmt = $mysqli->prepare("SELECT id,username,password FROM `users` WHERE `email` = ? OR `username` = ? LIMIT 1");
+		echo($mysqli->error);
 		$stmt->bind_param('ss', $user, $user);
 		$stmt->execute();
 		$stmt->bind_result($id,$username,$pwhash);
@@ -37,6 +38,7 @@ if(isset($_POST['user'])){
 				
 				// Log new IP addresses (per user) for security
 				$stmt = $mysqli->prepare("SELECT ip_address FROM logins WHERE user = ? AND ip_address = ?");
+				echo($mysqli->error);
 				$stmt->bind_param('is', $_SESSION['id'], $_SERVER['REMOTE_ADDR']);
 				$stmt->execute();
 				$stmt->bind_result($foo);
@@ -44,6 +46,7 @@ if(isset($_POST['user'])){
 					$stmt->close();
 
 					$stmt = $mysqli->prepare("INSERT INTO logins (user,date,ip_address) VALUES (?,now(),?)");
+					echo($mysqli->error);
 					$stmt->bind_param('is', $_SESSION['id'], $_SERVER['REMOTE_ADDR']);
 					$stmt->execute();
 					$stmt->close();

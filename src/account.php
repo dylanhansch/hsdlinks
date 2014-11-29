@@ -1,6 +1,6 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once("global.php");
+require_once("protected/config.php");
 
 if($logged == 0){
 	header("Location: " . $basedir);
@@ -9,6 +9,7 @@ if($logged == 0){
 $session_id = $_SESSION['id'];
 
 $stmt = $mysqli->prepare("SELECT username,firstname,lastname,email FROM `users` WHERE `id` = ?");
+echo($mysqli->error);
 $stmt->bind_param('i', $session_id);
 $stmt->execute();
 $stmt->bind_result($a_username,$a_fname,$a_lname,$a_email);
@@ -29,8 +30,8 @@ if(isset($_POST['username'])){
 		$a_message = "Please complete all the fields below!";
 	}else{
 		//check for duplicates
-		if (!($stmt = $mysqli->prepare("SELECT username FROM users WHERE id <> ? AND (username = ? OR email = ?)")))
-			die($mysqli->error);
+		$stmt = $mysqli->prepare("SELECT username FROM users WHERE id <> ? AND (username = ? OR email = ?)")
+		echo($mysqli->error);
 		$stmt->bind_param('iss', $session_id,$username,$email);
 		$stmt->execute();
 		$stmt->bind_result($user_query);
@@ -46,6 +47,7 @@ if(isset($_POST['username'])){
 			//insert the members
 			
 			$stmt = $mysqli->prepare("UPDATE users SET username = ?, email = ?, firstname = ?, lastname = ? WHERE id = ?");
+			echo($mysqli->error);
 			$stmt->bind_param('ssssi', $username, $email, $fname, $lname, $_SESSION["id"]);
 			$stmt->execute();
 			$stmt->bind_result($query);
@@ -63,8 +65,8 @@ if(isset($_POST['pass'])){
 	$npass1 = $_POST['npass1'];
 	$npass2 = $_POST['npass2'];
 	
-	if(!($stmt = $mysqli->prepare("SELECT password FROM `users` WHERE `id` = ? LIMIT 1")))
-		die($mysql->error);
+	$stmt = $mysqli->prepare("SELECT password FROM `users` WHERE `id` = ? LIMIT 1")
+	echo($mysqli->error);
 	$stmt->bind_param('i', $_SESSION["id"]);
 	$stmt->execute();
 	$stmt->bind_result($pwhash);
@@ -86,6 +88,7 @@ if(isset($_POST['pass'])){
 		$npass1 = crypt($npass1);
 		
 		$stmt = $mysqli->prepare("UPDATE users SET password = ? WHERE id = ?");
+		echo($mysqli->error);
 		$stmt->bind_param('si', $npass1, $_SESSION["id"]);
 		$stmt->execute();
 		

@@ -1,6 +1,6 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once("global.php");
+require_once("protected/config.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

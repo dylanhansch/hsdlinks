@@ -1,7 +1,7 @@
 <?php
 session_name("hsdlinks");
 session_start();
-include_once("protected/config.php");
+require_once("protected/config.php");
 
 if(file_exists("install.php")){
 	die("Before continuing to use this software, you must remove install.php");
@@ -73,7 +73,7 @@ if(isset($_SESSION['id'])){
 
 // List links you've got permission to in a table on index.php
 function links(){
-	global $mysqli, $logged, $role;
+	global $mysqli, $logged, $role, $session_id;
 	if($role == "admin"){
 		$stmt = $mysqli->prepare("SELECT links.id, links.short, links.url, links.privacy, users.username FROM `links` INNER JOIN `privileges` ON privileges.link_id = links.id INNER JOIN `users` ON users.id = privileges.user_id");
 		echo($mysqli->error);
@@ -122,11 +122,13 @@ function del_link($link_id){
 	global $mysqli;
 
 	$stmt = $mysqli->prepare("DELETE FROM links WHERE id = ?");
+	echo($mysqli->error);
 	$stmt->bind_param("i", $link_id);
 	$stmt->execute();
 	$stmt->close();
 
 	$stmt = $mysqli->prepare("DELETE FROM privileges WHERE link_id = ?");
+	echo($mysqli->error);
 	$stmt->bind_param("i", $link_id);
 	$stmt->execute();
 	$stmt->close();

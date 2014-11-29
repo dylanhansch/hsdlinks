@@ -1,10 +1,11 @@
 <?php
-include_once("global.php");
-include_once("protected/config.php");
+require_once("global.php");
+require_once("protected/config.php");
 
 $id = $_GET['id'];
 
 $stmt = $mysqli->prepare("SELECT `url` FROM `links` WHERE `short` = ?");
+echo($mysqli->error);
 $stmt->bind_param('s', $id);
 $stmt->execute();
 $stmt->bind_result($url);

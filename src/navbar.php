@@ -4,6 +4,7 @@ require_once('protected/config.php');
 
 if(isset($_SESSION['id'])){
 	$stmt = $mysqli->prepare("SELECT firstname,role FROM `users` WHERE `id` = ?");
+	echo($mysqli->error);
 	$stmt->bind_param('i', $session_id);
 	$stmt->execute();
 	$stmt->bind_result($fname,$role);

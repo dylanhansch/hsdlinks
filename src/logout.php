@@ -1,7 +1,7 @@
 <?php
 session_name("hsdlinks");
 session_start();
-include_once("protected/config.php");
+require_once("protected/config.php");
 session_destroy();
 
 if(isset($_COOKIE['id_cookie'])){
