@@ -192,10 +192,17 @@ if(isset($_GET['create'])){
 
 // Delete specified link from database
 function del_user($user_id){
-	global $mysqli;
-
+	global $mysqli, $session_id;
+	
 	$stmt = $mysqli->prepare("DELETE FROM users WHERE id = ?");
+	echo($mysqli->error);
 	$stmt->bind_param("i", $user_id);
+	$stmt->execute();
+	$stmt->close();
+	
+	$stmt = $mysqli->prepare("UPDATE privileges SET user_id = ? WHERE user_id = ? AND role = 'owner'");
+	echo($mysqli->error);
+	$stmt->bind_param('ii', $session_id, $user_id);
 	$stmt->execute();
 	$stmt->close();
 }
