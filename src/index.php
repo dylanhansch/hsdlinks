@@ -62,7 +62,7 @@ if(isset($_GET["del"])){
 							<?php if($logged != 0){
 							echo("<td>" . $link["privacy"] . "</td>");
 							echo("<td>" . $link["owner"] . "</td>");
-							echo('<td><a href=""><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>'); } ?>
+							echo('<td><a href="edit.php?id='.$link["id"].'"><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>'); } ?>
 						</tr>
 						<?php endforeach; ?>
 					</table>
