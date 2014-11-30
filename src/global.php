@@ -96,7 +96,7 @@ function links(){
 		$links = array();
 		
 		while($stmt->fetch()){
-			$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy, 'owner' => $out_owner, 'role' => $out_role);
+			$links[] = array('id' => $out_id, 'short' => $out_short, 'url' => $out_url, 'privacy' => $out_privacy, 'owner' => $out_owner);
 		}
 		$stmt->close();
 		
@@ -119,17 +119,45 @@ function links(){
 
 // Delete specified link from database
 function del_link($link_id){
-	global $mysqli;
+	global $mysqli, $session_id, $role;
+	
+	if(isset($session_id) && $role == "admin"){
+		$stmt = $mysqli->prepare("DELETE FROM links WHERE id = ?");
+		echo($mysqli->error);
+		$stmt->bind_param("i", $link_id);
+		$stmt->execute();
+		$stmt->close();
 
-	$stmt = $mysqli->prepare("DELETE FROM links WHERE id = ?");
-	echo($mysqli->error);
-	$stmt->bind_param("i", $link_id);
-	$stmt->execute();
-	$stmt->close();
+		$stmt = $mysqli->prepare("DELETE FROM privileges WHERE link_id = ?");
+		echo($mysqli->error);
+		$stmt->bind_param("i", $link_id);
+		$stmt->execute();
+		$stmt->close();
+	}elseif(isset($session_id)){
+		$stmt = $mysqli->prepare("SELECT role FROM privileges WHERE user_id = ? AND link_id = ?");
+		echo($mysqli->error);
+		$stmt->bind_param('ii', $session_id, $link_id);
+		$stmt->execute();
+		$stmt->bind_result($perm);
+		if(!($stmt->fetch())){
+			$perm = "view";
+		}
+		$stmt->close();
+		
+		if($perm != "view"){
+			$stmt = $mysqli->prepare("DELETE FROM links WHERE id = ?");
+			echo($mysqli->error);
+			$stmt->bind_param("i", $link_id);
+			$stmt->execute();
+			$stmt->close();
 
-	$stmt = $mysqli->prepare("DELETE FROM privileges WHERE link_id = ?");
-	echo($mysqli->error);
-	$stmt->bind_param("i", $link_id);
-	$stmt->execute();
-	$stmt->close();
+			$stmt = $mysqli->prepare("DELETE FROM privileges WHERE link_id = ?");
+			echo($mysqli->error);
+			$stmt->bind_param("i", $link_id);
+			$stmt->execute();
+			$stmt->close();
+		}else{
+			die("No permission.");
+		}
+	}
 }

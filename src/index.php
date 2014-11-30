@@ -24,6 +24,16 @@ if(isset($_GET["del"])){
 	del_link($_GET["del"]);
 	header("Location: " . $basedir);
 }
+
+if(isset($session_id)){
+	$stmt = $mysqli->prepare("SELECT role FROM users WHERE id = ?");
+	echo($mysqli->error);
+	$stmt->bind_param('i', $session_id);
+	$stmt->execute();
+	$stmt->bind_result($role);
+	$stmt->fetch();
+	$stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +54,7 @@ if(isset($_GET["del"])){
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
-					<h1>HSDLinks <small>Alpha</small></h1>
+					<h1>HSDLinks</h1>
 					
 					<table class="table table-striped">
 						<tr>
@@ -56,14 +66,34 @@ if(isset($_GET["del"])){
 							echo("<th></th>"); } ?>
 						</tr>
 						<?php $links = links();
-						foreach($links as $link): ?>
+						foreach($links as $link):
+						
+						if(isset($session_id) && $role == "admin"){
+							$perm = "admin";
+						}elseif(isset($session_id)){
+							$stmt = $mysqli->prepare("SELECT role FROM privileges WHERE user_id = ? AND link_id = ?");
+							echo($mysqli->error);
+							$stmt->bind_param('ii', $session_id, $link['id']);
+							$stmt->execute();
+							$stmt->bind_result($perm);
+							if(!($stmt->fetch())){
+								$perm = "view";
+							}
+							$stmt->close();
+						}
+						?>
 						<tr>
 							<td><?php echo('<a href="'.$link["url"].'">'.$link["short"].'</a>'); ?></td>
 							<td><?php echo($link["url"]); ?></td>
 							<?php if($logged != 0){
 							echo("<td>" . $link["privacy"] . "</td>");
 							echo("<td>" . $link["owner"] . "</td>");
-							echo('<td><a href="edit.php?id='.$link["id"].'"><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>'); } ?>
+								if($perm != "view"){
+									echo('<td><a href="edit.php?id='.$link["id"].'"><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>');
+								}else{
+									echo('<td></td>');
+								}
+							} ?>
 						</tr>
 						<?php endforeach; ?>
 					</table>

@@ -30,7 +30,7 @@ if(isset($_POST['username'])){
 		$a_message = "Please complete all the fields below!";
 	}else{
 		//check for duplicates
-		$stmt = $mysqli->prepare("SELECT username FROM users WHERE id <> ? AND (username = ? OR email = ?)")
+		$stmt = $mysqli->prepare("SELECT username FROM users WHERE id <> ? AND (username = ? OR email = ?)");
 		echo($mysqli->error);
 		$stmt->bind_param('iss', $session_id,$username,$email);
 		$stmt->execute();
@@ -65,7 +65,7 @@ if(isset($_POST['pass'])){
 	$npass1 = $_POST['npass1'];
 	$npass2 = $_POST['npass2'];
 	
-	$stmt = $mysqli->prepare("SELECT password FROM `users` WHERE `id` = ? LIMIT 1")
+	$stmt = $mysqli->prepare("SELECT password FROM `users` WHERE `id` = ? LIMIT 1");
 	echo($mysqli->error);
 	$stmt->bind_param('i', $_SESSION["id"]);
 	$stmt->execute();
