@@ -89,7 +89,7 @@ if(isset($session_id)){
 							echo("<td>" . $link["privacy"] . "</td>");
 							echo("<td>" . $link["owner"] . "</td>");
 								if($perm != "view"){
-									echo('<td><a href="edit.php?id='.$link["id"].'"><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'"><span class="glyphicon glyphicon-remove"></span></a></td>');
+									echo('<td><a href="edit.php?id='.$link["id"].'"><span class="glyphicon glyphicon-pencil"></a></span></a> <a href="?del='.$link["id"].'" onclick="return confirmation()"><span class="glyphicon glyphicon-remove"></span></a></td>');
 								}else{
 									echo('<td></td>');
 								}
@@ -101,6 +101,17 @@ if(isset($session_id)){
 				</div>
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+		function confirmation() {
+			var r = confirm("WARNING!\nThis action is perminate and non reversable. Are you sure you want to continue?");
+			if (r == true) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		</script>
 		
 		<?php include("footer.php"); ?>
 	</body>

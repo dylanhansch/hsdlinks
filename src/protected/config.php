@@ -6,7 +6,7 @@ $basedir = "/hsdlinks/";
 $host = "localhost";
 $user = "demo";
 $pass = "";
-$database = "hsdlinks";
+$database = "hsdlinksdev";
 
 $mysqli = new mysqli($host, $user, $pass, $database);
 if ($mysqli->connect_errno) {

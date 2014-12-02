@@ -355,7 +355,6 @@ if(isset($_GET['del'])){
 									<label for="name">Role</label>
 									<select name="role" class="form-control" required>
 										<option value="user" <?php if($e_role == "user"){ ?> selected="selected" <?php } ?>>User</option>
-										<option value="staff" <?php if($e_role == "staff"){ ?> selected="selected" <?php } ?>>Staff</option>
 										<option value="admin" <?php if($e_role == "admin"){ ?> selected="selected" <?php } ?>>Admin</option>
 									</select>
 								</div>
@@ -387,7 +386,7 @@ if(isset($_GET['del'])){
 								<td><?php echo($user['fname'].' '.$user['lname']); ?></td>
 								<td><?php echo($user['email']); ?></td>
 								<td><?php echo($user['role']); ?></td>
-								<td><a href="?del=<?php echo($user["id"]); ?>"><span class="glyphicon glyphicon-remove"></span></a></td>
+								<td><a href="?del=<?php echo($user["id"]); ?>" onclick="return confirmation()"><span class="glyphicon glyphicon-remove"></span></a></td>
 							</tr>
 							<?php endforeach; ?>
 						</table>
@@ -397,6 +396,17 @@ if(isset($_GET['del'])){
 				</div>
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+		function confirmation() {
+			var r = confirm("WARNING!\nThis action is perminate and non reversable. Are you sure you want to continue?");
+			if (r == true) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		</script>
 		
 		<?php include("footer.php"); ?>
 	</body>
