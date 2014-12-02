@@ -99,6 +99,7 @@ if(isset($_GET['create'])){
 					$stmt->execute();
 					
 					$createuser_message = "User registered.";
+					header('Refresh: 2; URL='.$basedir.'users.php');
 				}
 				$stmt->close();
 			}
@@ -130,6 +131,7 @@ if(isset($_GET['create'])){
 			$stmt->execute();
 			
 			$editpassword_message = "Password changed!";
+			header('Refresh: 2; URL='.$basedir.'users.php?edit='.$edit);
 		}
 		$stmt->close();
 	}
@@ -182,6 +184,7 @@ if(isset($_GET['create'])){
 				$stmt->execute();
 				
 				$edituser_message = "User's account updated.";
+				header('Refresh: 2; URL='.$basedir.'users.php?edit='.$edit);
 			}
 			$stmt->close();
 		}

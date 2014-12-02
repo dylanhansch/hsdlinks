@@ -43,6 +43,8 @@ if(isset($_POST['original'])){
 				$stmt->close();
 				
 				$message = "HSDLink created.";
+				header('Refresh: 2; URL='.$basedir);
+				
 			}else{
 				$message = "Origional URL must be HTTP or HTTPS protocol.";
 			}
