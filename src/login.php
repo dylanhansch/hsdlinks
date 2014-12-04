@@ -22,7 +22,7 @@ if(isset($_POST['user'])){
 		if($stmt->fetch()){
 			$stmt->close();
 			if($pwhash !== crypt($pass, $pwhash)){
-				$message = "The information you entered was incorrect!";
+				$message = "Invalid login.";
 			}else{
 				//start the sessions
 				$_SESSION['pass'] = $pwhash;
@@ -55,7 +55,7 @@ if(isset($_POST['user'])){
 				header("Location: " . $basedir);
 			}
 		}else{
-			$message = "The information you entered was incorrect!";
+			$message = "Invalid login.";
 		}
 	}
 }

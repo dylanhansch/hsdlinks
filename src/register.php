@@ -42,11 +42,10 @@ if(isset($_POST['username'])){
 				//insert the members
 				$ip_address = $_SERVER['REMOTE_ADDR'];
 				
-				$stmt = $mysqli->prepare("INSERT INTO users (username, email, firstname, lastname, password, sign_up_date, ip_address, role) VALUES (? , ?, ?, ?, ?, now(), ?, ?)");
+				$stmt = $mysqli->prepare("INSERT INTO users (username, email, firstname, lastname, password, sign_up_date, ip_address, role) VALUES (?, ?, ?, ?, ?, now(), ?, ?)");
 				echo($mysqli->error);
 				$stmt->bind_param('sssssss', $username, $email, $fname, $lname, $pass1, $ip_address, $role);
 				$stmt->execute();
-				$stmt->bind_result($query);
 				
 				$message = "You have now been registered!";
 			}

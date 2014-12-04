@@ -194,7 +194,7 @@ if(isset($_GET['create'])){
 	$pageheader = '<h1 class="center">Manage Users <a href="?create" class="btn btn-info btn-sm">Create User</a></h1>';
 }
 
-// Delete specified link from database
+// Delete user from application. Will transfer their links they owned, to current user.
 function del_user($user_id){
 	global $mysqli, $session_id;
 	
