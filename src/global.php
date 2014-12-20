@@ -3,10 +3,6 @@ session_name("hsdlinks");
 session_start();
 require_once("protected/config.php");
 
-if(file_exists("install.php")){
-	die("Before continuing to use this software, you must remove install.php");
-}
-
 //checking is the sessions are set
 if(isset($_SESSION['username']) && isset($_SESSION['pass']) && isset($_SESSION['id'])){
 	$session_username = $_SESSION['username'];
@@ -69,6 +65,45 @@ if(isset($_SESSION['id'])){
 	$stmt->bind_result($role);
 	$stmt->fetch();
 	$stmt->close();
+}
+
+// Paginate the links on the main screen
+function pagination(){
+	global $mysqli;
+	
+	$stmt = $mysqli->prepare("SELECT id FROM links");
+	echo($mysqli->error);
+	$stmt->execute();
+	$count = $stmt->num_rows;
+	$stmt->fetch();
+	$stmt->close();
+
+	if(isset($_GET['page'])){
+		$page = preg_replace("#[^0-9]#","",$_GET['page']);
+	}else{
+		$page = 1;
+	}
+	
+	$perpage = 10;
+	$lastpage = cell($count / $perpage);
+
+	if($page < 1){
+		$page = 1;
+	}elseif($page > $lastpage){
+		$page = $lastpage;
+	}
+
+	$limit = "LIMIT ".($page - 1) * $perpage.",$perpage";
+
+	if($lastpage != 1){
+		$next = $page + 1;
+		echo('<a href="?page="'.$next.'">Next</a>');
+	}
+
+	if($page != 1){
+		$prev = $page - 1;
+		echo('<a href="?page="'.$prev.'">Previous</a>');
+	}
 }
 
 // List links you've got permission to in a table on index.php
