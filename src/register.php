@@ -57,7 +57,7 @@ if(isset($_POST['username'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Register at HSDLinks</title>
+		<title>Register at <?php echo($app); ?></title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">

@@ -1,5 +1,5 @@
 <?php
-session_name("hsdlinks");
+session_name("links");
 session_start();
 require_once("protected/config.php");
 

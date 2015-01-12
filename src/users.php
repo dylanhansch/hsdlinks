@@ -219,7 +219,7 @@ if(isset($_GET['del'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title><?php echo($title); ?> | HSDLinks</title>
+		<title><?php echo($title); ?> | <?php echo($app); ?></title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">

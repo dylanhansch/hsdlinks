@@ -129,7 +129,7 @@ if(isset($_GET['id'])){
 							$stmt->execute();
 							$stmt->close();
 							
-							$message = "HSDLink updated.";
+							$message = "Link updated.";
 						}else{
 							$message = "Original URL must be HTTP or HTTPS protocol.";
 						}
@@ -147,7 +147,7 @@ if(isset($_GET['id'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Edit HSDLink</title>
+		<title>Edit Link</title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -164,7 +164,7 @@ if(isset($_GET['id'])){
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
 					
-					<h1>Edit HSDLink</h1>
+					<h1>Edit Link</h1>
 					<?php echo($message); ?>
 					<form action="edit.php?id=<?php echo($id); ?>" method="post" role="form">
 						<div class="row">

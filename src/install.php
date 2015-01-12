@@ -65,7 +65,7 @@ if(isset($_GET['pop'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Install | HSDLinks</title>
+		<title>Install Links</title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -91,10 +91,10 @@ if(isset($_GET['pop'])){
 					
 					<?php }else{ ?>
 					
-					<h1>Install HSDLinks</h1>
+					<h1>Install Links</h1>
 					<hr>
 					<h3>Step 1.</h3>
-					<p>Create a database. For example a database called, "hsdlinks".
+					<p>Create a database. For example a database called, "links".
 					
 					<h3>Step 2.</h3>
 					<p>Fill out the config file in "protected/config.php" with the relevant information.</p>

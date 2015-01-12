@@ -63,7 +63,7 @@ if(isset($_POST['user'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Login to HSDLinks</title>
+		<title>Login to <?php echo($app); ?></title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">

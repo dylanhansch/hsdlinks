@@ -38,7 +38,7 @@ if(isset($session_id)){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>HSD Links</title>
+		<title><?php echo($app); ?></title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -54,7 +54,7 @@ if(isset($session_id)){
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
-					<h1>HSDLinks</h1>
+					<h1><?php echo($app); ?></h1>
 					
 					<table class="table table-striped">
 						<tr>

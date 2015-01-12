@@ -42,7 +42,7 @@ if(isset($_POST['original'])){
 				$stmt->execute();
 				$stmt->close();
 				
-				$message = "HSDLink created.";
+				$message = "Link created.";
 				header('Refresh: 2; URL='.$basedir);
 				
 			}else{
@@ -55,7 +55,7 @@ if(isset($_POST['original'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Create HSDLink</title>
+		<title>Create Link</title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -72,7 +72,7 @@ if(isset($_POST['original'])){
 			<div class="row">
 				<div class="col-lg-12" style="padding-top:50px;">
 					
-					<h1>Create HSDLink</h1>
+					<h1>Create Link</h1>
 					
 					<form action="create.php" method="post" role="form">
 						<p><?php echo($message); ?></p>
