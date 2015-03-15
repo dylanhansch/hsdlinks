@@ -1,7 +1,7 @@
 <?php
-session_name("links");
+session_name("hsdlinks");
 session_start();
-require_once("protected/config.php");
+include_once('protected/config.php');
 session_destroy();
 
 if(isset($_COOKIE['id_cookie'])){
@@ -9,5 +9,5 @@ if(isset($_COOKIE['id_cookie'])){
 	setcookie("pass_cookie","",time()-50000,"/");
 }
 
-header("Location: " . $basedir);
+header("Location: ./");
 ?>

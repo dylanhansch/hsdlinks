@@ -1,6 +1,6 @@
 <?php
-require_once('protected/config.php');
-require_once('global.php');
+include_once('protected/config.php');
+include_once('lib/global.php');
 
 if(isset($_SESSION['id'])){
 	$session_id = $_SESSION['id'];
@@ -99,7 +99,7 @@ if(isset($_GET['create'])){
 					$stmt->execute();
 					
 					$createuser_message = "User registered.";
-					header('Refresh: 2; URL='.$basedir.'users.php');
+					header('Refresh: 2; URL=users.php');
 				}
 				$stmt->close();
 			}
@@ -131,13 +131,13 @@ if(isset($_GET['create'])){
 			$stmt->execute();
 			
 			$editpassword_message = "Password changed!";
-			header('Refresh: 2; URL='.$basedir.'users.php?edit='.$edit);
+			header('Refresh: 2; URL=users.php?edit='.$edit);
 		}
 		$stmt->close();
 	}
 }elseif(isset($_GET['edit']) && $editfetch == True){
 	$title = "Edit User";
-	$pageheader = '<h1 class="center">Edit User <a href="'.$basedir.'users.php?edit='.$edit.'&pass" class="btn btn-info btn-sm">Change Password</a></h1>';
+	$pageheader = '<h1 class="center">Edit User <a href="users.php?edit='.$edit.'&pass" class="btn btn-info btn-sm">Change Password</a></h1>';
 	$edituser_message = "";
 	
 	
@@ -184,7 +184,7 @@ if(isset($_GET['create'])){
 				$stmt->execute();
 				
 				$edituser_message = "User's account updated.";
-				header('Refresh: 2; URL='.$basedir.'users.php?edit='.$edit);
+				header('Refresh: 2; URL=users.php?edit='.$edit);
 			}
 			$stmt->close();
 		}
@@ -220,17 +220,11 @@ if(isset($_GET['del'])){
 <html lang="en">
 	<head>
 		<title><?php echo($title); ?> | <?php echo($app); ?></title>
-		<meta charset="utf-8">
-		<meta name="author" content="Dylan Hansch">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<link rel="shortcut icon" content="none">
 		
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<?php include_once('lib/header.php'); ?>
 	</head>
 	<body>
-		<?php include("navbar.php"); ?>
+		<?php include_once('lib/navbar.php'); ?>
 		
 		<div class="container">
 			<div class="row">
@@ -241,7 +235,7 @@ if(isset($_GET['del'])){
 					if(isset($_GET['create'])){ ?>
 					
 					<ol class="breadcrumb" style="margin-top:10px;">
-						<li><a href="<?php echo($basedir); ?>users.php">Users</a></li>
+						<li><a href="users.php">Users</a></li>
 						<li class="active">Create</li>
 					</ol>
 					
@@ -298,8 +292,8 @@ if(isset($_GET['del'])){
 					<?php }elseif(isset($_GET['edit']) && isset($_GET['pass']) && $editfetch == True){ ?>
 					
 					<ol class="breadcrumb" style="margin-top:10px;">
-						<li><a href="<?php echo($basedir); ?>users.php">Users</a></li>
-						<li><a href="<?php echo($basedir); ?>users.php?edit=<?php echo($edit); ?>">Edit</a></li>
+						<li><a href="users.php">Users</a></li>
+						<li><a href="users.php?edit=<?php echo($edit); ?>">Edit</a></li>
 						<li class="active">Password</li>
 					</ol>
 					
@@ -324,7 +318,7 @@ if(isset($_GET['del'])){
 					<?php }elseif(isset($_GET['edit']) && $editfetch == True){ ?>
 					
 					<ol class="breadcrumb" style="margin-top:10px;">
-						<li><a href="<?php echo($basedir); ?>users.php">Users</a></li>
+						<li><a href="users.php">Users</a></li>
 						<li class="active">Edit</li>
 					</ol>
 					
@@ -385,7 +379,7 @@ if(isset($_GET['del'])){
 							<?php $users = users();
 							foreach($users as $user): ?>
 							<tr>
-								<td><?php echo('<a href="'.$basedir.'users.php?edit='.$user["id"].'">'.$user["username"].'</a>'); ?></td>
+								<td><?php echo('<a href="users.php?edit='.$user["id"].'">'.$user["username"].'</a>'); ?></td>
 								<td><?php echo($user['fname'].' '.$user['lname']); ?></td>
 								<td><?php echo($user['email']); ?></td>
 								<td><?php echo($user['role']); ?></td>
@@ -400,17 +394,6 @@ if(isset($_GET['del'])){
 			</div>
 		</div>
 		
-		<script type="text/javascript">
-		function confirmation() {
-			var r = confirm("WARNING!\nThis action is perminate and non reversable. Are you sure you want to continue?");
-			if (r == true) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		</script>
-		
-		<?php include("footer.php"); ?>
+		<?php include_once('lib/footer.php'); ?>
 	</body>
 </html>

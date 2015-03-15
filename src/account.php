@@ -1,9 +1,9 @@
 <?php
-require_once("global.php");
-require_once("protected/config.php");
+include_once('protected/config.php');
+include_once('lib/global.php');
 
 if($logged == 0){
-	header("Location: " . $basedir);
+	header("Location: ./");
 }
 
 $session_id = $_SESSION['id'];
@@ -101,17 +101,11 @@ if(isset($_POST['pass'])){
 <html lang="en">
 	<head>
 		<title>My <?php echo($app); ?> Account</title>
-		<meta charset="utf-8">
-		<meta name="author" content="Dylan Hansch">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<link rel="shortcut icon" content="none">
 		
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<?php include_once('lib/header.php'); ?>
 	</head>
 	<body>
-		<?php include("navbar.php"); ?>
+		<?php include_once('lib/navbar.php'); ?>
 		
 		<div class="container">
 			<div class="row">
@@ -176,6 +170,6 @@ if(isset($_POST['pass'])){
 			</div>
 		</div>
 		
-		<?php include("footer.php"); ?>
+		<?php include_once('lib/footer.php'); ?>
 	</body>
 </html>
