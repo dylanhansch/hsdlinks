@@ -1,7 +1,7 @@
 <?php
 // Web directory to HSDLinks installation, with beginning and trailing slash.
-$basedir = "/links/";
-$app = "Links";
+$basedir = "/hsdlinks/";
+$app = "HSDLinks";
 
 // Connecting to the database
 $host = "localhost";

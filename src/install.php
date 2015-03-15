@@ -52,7 +52,7 @@ if(isset($_GET['pop'])){
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Install Links</title>
+		<title>Install HSDLinks</title>
 		<meta charset="utf-8">
 		<meta name="author" content="Dylan Hansch">
 		<meta name="apple-mobile-web-app-capable" content="yes">

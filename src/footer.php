@@ -1,6 +1,6 @@
 <div id="footer">
 			<div class="container">
-				<p class="text-muted center"><a href="https://github.com/dylanhansch/links" target="_blank">Links</a> &copy; <?php echo(date("Y")); ?> <a href="https://dylanhansch.net/" target="_blank">Dylan Hansch</a>. All rights reserved.</p>
+				<p class="text-muted center"><a href="https://github.com/dylanhansch/hsdlinks" target="_blank">HSDLinks</a> &copy; <?php echo(date("Y")); ?> <a href="https://dylanhansch.net" target="_blank">Dylan Hansch</a>. All rights reserved.</p>
 			</div>
 		</div>
 		
