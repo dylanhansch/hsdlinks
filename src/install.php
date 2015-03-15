@@ -65,7 +65,7 @@ if(isset($_GET['pop'])){
 					<?php if(isset($_GET['success'])){ ?>
 					
 					<h1 style="color:green">Congrats!</h1>
-					<p>System Status is successfully installed, now you can start adding your servers so you can monitor them! :)</p>
+					<p><?php echo($app); ?> is successfully installed, you can now shorten links under your own domain, with meaningful URLs!</p>
 					
 					<h2 style="color:red">ALERT!</h2>
 					<p>You <strong>MUST</strong> remove install.php if you want this application to be secure! Failing to do so, <strong>WILL</strong> result in a loss of data once a malicious user comes along.</p>
@@ -75,7 +75,7 @@ if(isset($_GET['pop'])){
 					<h1>Install Links</h1>
 					<hr>
 					<h3>Step 1.</h3>
-					<p>Create a database. For example a database called, "links".
+					<p>Create a database. For example a database called, "hsdlinks".
 					
 					<h3>Step 2.</h3>
 					<p>Fill out the config file in "protected/config.php" with the relevant information.</p>
@@ -83,17 +83,7 @@ if(isset($_GET['pop'])){
 					<h3>Step 3.</h3>
 					<p>Populate the database with necessary tables.</p>
 					<button class="btn btn-warning" onclick="populate_confirmation()">Populate Database</button>
-
-					<script>
-					function populate_confirmation() {
-						var r = confirm("WARNING!\nPopulating an already populated database will result in data loss. This completely overwrites excisting information.");
-						if (r == true) {
-							window.location.href = "?pop";
-						} else {
-							x = "You pressed Cancel!";
-						}
-					}
-					</script>
+					
 					<?php } ?>
 				</div>
 			</div>
