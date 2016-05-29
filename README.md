@@ -1,4 +1,4 @@
 hsdlinks
 ========
 
-A custom URL shortener specifically made for use on http://hsdlinks.net
+A custom URL shortener specifically made for HSDLinks
