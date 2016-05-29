@@ -191,7 +191,7 @@ if(isset($_GET['create'])){
 	}
 }else{
 	$title = "User Management";
-	$pageheader = '<h1 class="center">Manage Users <a href="?create" class="btn btn-info btn-sm">Create User</a></h1>';
+	$pageheader = '<h1 class="center">Manage Users <a href="users.php?create" class="btn btn-info btn-sm">Create User</a></h1>';
 }
 
 // Delete user from application. Will transfer their links they owned, to current user.
@@ -383,7 +383,7 @@ if(isset($_GET['del'])){
 								<td><?php echo($user['fname'].' '.$user['lname']); ?></td>
 								<td><?php echo($user['email']); ?></td>
 								<td><?php echo($user['role']); ?></td>
-								<td><a href="?del=<?php echo($user["id"]); ?>" onclick="return confirmation()"><span class="glyphicon glyphicon-remove"></span></a></td>
+								<td><a href="users.php?del=<?php echo($user["id"]); ?>" onclick="return confirmation()"><span class="glyphicon glyphicon-remove"></span></a></td>
 							</tr>
 							<?php endforeach; ?>
 						</table>

@@ -163,7 +163,7 @@ if(isset($_POST['pass'])){
 					<?php }else{ ?>
 					
 					<h1>Hey there <?php echo($fname); ?>!</h1>
-					<a href="?view=edit" class="btn btn-primary" role="button">Edit Account</a> <a href="?view=pass" class="btn btn-primary" role="button">Change Password</a>
+					<a href="account.php?view=edit" class="btn btn-primary" role="button">Edit Account</a> <a href="account.php?view=pass" class="btn btn-primary" role="button">Change Password</a>
 					
 					<?php } ?>
 				</div>
